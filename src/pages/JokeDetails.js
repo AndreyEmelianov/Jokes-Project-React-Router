@@ -1,13 +1,29 @@
 import { useParams, Route } from 'react-router-dom/cjs/react-router-dom.min';
 
+import HighlightedJoke from '../components/jokes/HighlightedJoke';
 import Comments from '../components/comments/Comments';
+
+const DUMMY_JOKES = [
+	{
+		id: 'j1',
+		topic: 'Programming',
+		text: 'eserunt distinctio dicta consequuntur eius pariatur, magnam libero nulla voluptates. Mollitia excepturi nostrum nisi?',
+	},
+	{
+		id: 'j2',
+		topic: 'General',
+		text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore saepe accusamus ullam quos maiores porro nostrum, deserunt distinctio dicta ',
+	},
+];
 
 const JokeDetails = () => {
 	const params = useParams();
 
+	const joke = DUMMY_JOKES.find((joke) => joke.id === params.jokeId);
+
 	return (
 		<>
-			<h1>JokeDetails {params.jokeId}</h1>
+			<HighlightedJoke text={joke.text} topic={joke.topic} />
 			<Route path={`/jokes/${params.jokeId}/comments`}>
 				<Comments />
 			</Route>
