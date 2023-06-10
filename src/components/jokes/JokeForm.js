@@ -1,10 +1,13 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { Prompt } from 'react-router-dom/cjs/react-router-dom.min';
 
 import Card from '../UI/Card';
 import Loader from '../UI/Loader';
 import styles from './JokeForm.module.css';
 
 const JokeForm = (props) => {
+	const [isFormFocused, setIsFormFocused] = useState(false);
+
 	const topicInputRef = useRef();
 	const textInputRef = useRef();
 
@@ -17,28 +20,50 @@ const JokeForm = (props) => {
 		props.onAddJoke({ topic: enteredTopic, text: enteredText });
 	}
 
-	return (
-		<Card>
-			<form className={styles.form} onSubmit={submitFormHandler}>
-				{props.isLoading && (
-					<div className={styles.loading}>
-						<Loader />
-					</div>
-				)}
+	const formFocusHandler = () => {
+		setIsFormFocused(true);
+	};
 
-				<div className={styles.control}>
-					<label htmlFor="topic">Topic</label>
-					<input type="text" id="topic" ref={topicInputRef} />
-				</div>
-				<div className={styles.control}>
-					<label htmlFor="text">Text</label>
-					<textarea id="text" rows="5" ref={textInputRef}></textarea>
-				</div>
-				<div className={styles.actions}>
-					<button className="btn">Add Joke</button>
-				</div>
-			</form>
-		</Card>
+	const sendDataHandler = () => {
+		setIsFormFocused(false);
+	};
+
+	return (
+		<>
+			<Prompt
+				when={isFormFocused}
+				message={(location) =>
+					'Do you really want to leave this page? If so , you will lost all data in the form!'
+				}
+			/>
+			<Card>
+				<form
+					className={styles.form}
+					onSubmit={submitFormHandler}
+					onFocus={formFocusHandler}
+				>
+					{props.isLoading && (
+						<div className={styles.loading}>
+							<Loader />
+						</div>
+					)}
+
+					<div className={styles.control}>
+						<label htmlFor="topic">Topic</label>
+						<input type="text" id="topic" ref={topicInputRef} />
+					</div>
+					<div className={styles.control}>
+						<label htmlFor="text">Text</label>
+						<textarea id="text" rows="5" ref={textInputRef}></textarea>
+					</div>
+					<div className={styles.actions}>
+						<button className="btn" onClick={sendDataHandler}>
+							Add Joke
+						</button>
+					</div>
+				</form>
+			</Card>
+		</>
 	);
 };
 
