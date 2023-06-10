@@ -1,4 +1,9 @@
-import { useParams, Route, Link } from 'react-router-dom/cjs/react-router-dom.min';
+import {
+	useParams,
+	Route,
+	Link,
+	useRouteMatch,
+} from 'react-router-dom/cjs/react-router-dom.min';
 
 import HighlightedJoke from '../components/jokes/HighlightedJoke';
 import Comments from '../components/comments/Comments';
@@ -17,6 +22,7 @@ const DUMMY_JOKES = [
 ];
 
 const JokeDetails = () => {
+	const routeMatch = useRouteMatch();
 	const params = useParams();
 
 	const joke = DUMMY_JOKES.find((joke) => joke.id === params.jokeId);
@@ -28,14 +34,14 @@ const JokeDetails = () => {
 	return (
 		<>
 			<HighlightedJoke text={joke.text} topic={joke.topic} />
-			<Route path={`/jokes/${params.jokeId}`} exact>
+			<Route path={`${routeMatch.path}`} exact>
 				<div className="centered">
-					<Link className="btn--empty" to={`/jokes/${params.jokeId}/comments`}>
+					<Link className="btn--empty" to={`${routeMatch.url}/comments`}>
 						Show Comments
 					</Link>
 				</div>
 			</Route>
-			<Route path={`/jokes/${params.jokeId}/comments`}>
+			<Route path={`${routeMatch.path}/comments`}>
 				<Comments />
 			</Route>
 		</>

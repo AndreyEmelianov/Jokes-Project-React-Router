@@ -24,7 +24,10 @@ const JokeList = (props) => {
 	const sortedJokes = sortJokes(props.jokes, isSortingAscending);
 
 	const toggleSortingJokesHandler = () => {
-		history.push('/jokes?sort=' + (isSortingAscending ? 'desc' : 'asc'));
+		history.push({
+			pathname: location.pathname,
+			search: `?sort=${isSortingAscending ? 'desc' : 'asc'}`,
+		});
 	};
 
 	return (
@@ -35,7 +38,7 @@ const JokeList = (props) => {
 				</button>
 			</div>
 			<ul className={styles.list}>
-				{props.jokes.map((joke) => (
+				{sortedJokes.map((joke) => (
 					<JokeItem key={joke.id} id={joke.id} topic={joke.topic} text={joke.text} />
 				))}
 			</ul>
