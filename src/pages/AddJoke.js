@@ -1,7 +1,11 @@
-import React from 'react';
+import JokeForm from '../components/jokes/JokeForm';
 
 const AddJoke = () => {
-	return <h1>AddJoke</h1>;
+	const addJokeHandler = (jokeData) => {
+		console.log(jokeData);
+	};
+
+	return <JokeForm onAddJoke={addJokeHandler} />;
 };
 
 export default AddJoke;
