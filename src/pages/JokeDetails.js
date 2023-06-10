@@ -1,4 +1,4 @@
-import { useParams, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams, Route, Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 import HighlightedJoke from '../components/jokes/HighlightedJoke';
 import Comments from '../components/comments/Comments';
@@ -28,6 +28,13 @@ const JokeDetails = () => {
 	return (
 		<>
 			<HighlightedJoke text={joke.text} topic={joke.topic} />
+			<Route path={`/jokes/${params.jokeId}`} exact>
+				<div className="centered">
+					<Link className="btn--empty" to={`/jokes/${params.jokeId}/comments`}>
+						Show Comments
+					</Link>
+				</div>
+			</Route>
 			<Route path={`/jokes/${params.jokeId}/comments`}>
 				<Comments />
 			</Route>
