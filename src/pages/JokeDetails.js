@@ -21,6 +21,10 @@ const JokeDetails = () => {
 
 	const joke = DUMMY_JOKES.find((joke) => joke.id === params.jokeId);
 
+	if (!joke) {
+		return <h1 className="centered">Шуток не найдено</h1>;
+	}
+
 	return (
 		<>
 			<HighlightedJoke text={joke.text} topic={joke.topic} />
